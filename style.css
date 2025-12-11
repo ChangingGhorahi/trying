@@ -27,7 +27,12 @@ body {
     transition: filter 0.3s ease;
 }
 
-/* Blur effect for modals/menu */
+/* Blur and Scroll Fix for Modals/Menu */
+body.modal-open {
+    overflow: hidden; /* Fixes background scrolling on mobile and desktop */
+    position: relative; /* Ensures overflow: hidden works consistently in some browsers */
+}
+
 body.modal-open > *:not(.modal-overlay):not(.menu-modal-overlay) {
     filter: blur(4px);
     pointer-events: none;
@@ -836,4 +841,5 @@ h1, h2, h3, h4 {
     .wards-grid-container {
         padding: 0 10px;
     }
+
 }
