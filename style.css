@@ -29,8 +29,10 @@ body {
 
 /* Blur and Scroll Fix for Modals/Menu */
 body.modal-open {
-    overflow: hidden; /* Fixes background scrolling on mobile and desktop */
-    position: relative; /* Ensures overflow: hidden works consistently in some browsers */
+    position: fixed; /* Locks the viewport to prevent scrolling on mobile devices */
+    width: 100%;    /* Ensures fixed position fills the whole width */
+    height: 100%;   /* Ensures fixed position fills the whole height */
+    overflow: hidden; /* Keep this for good measure */
 }
 
 body.modal-open > *:not(.modal-overlay):not(.menu-modal-overlay) {
@@ -841,5 +843,4 @@ h1, h2, h3, h4 {
     .wards-grid-container {
         padding: 0 10px;
     }
-
 }
