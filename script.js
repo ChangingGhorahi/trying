@@ -490,34 +490,46 @@ function renderContent() {
     // -----------------------------------------------------
 }
 
-// --- 5. SIDEBAR MENU MODAL FUNCTIONS ---
+// --- Global variable to store scroll position ---
+let currentScrollY = 0;
+
+
+// --- 5. SIDEBAR MENU MODAL FUNCTIONS (FIXED) ---
 
 function openMenuModal() {
     if (!menuModalOverlay) return;
     
-    // Close any other open modals before opening the menu
+    // 1. Close any other open modals
     if (wardModal && wardModal.style.display === 'flex') {
         closeModal();
     }
     if (taxModal && taxModal.style.display === 'flex') {
         closeTaxModal();
     }
-    // Close Donate Modal if open (NEW)
     if (donateModal && donateModal.style.display === 'flex') {
         closeDonateModal();
     }
     
-    // Use the 'is-active' class to control the sidebar slide and background blur
-    menuModalOverlay.classList.add('is-active');
+    // 2. Save current scroll position and apply fixed position
+    currentScrollY = window.scrollY;
+    document.body.style.top = `-${currentScrollY}px`; // Move page up by scroll amount
     document.body.classList.add('modal-open');
+    
+    // 3. Open the menu
+    menuModalOverlay.classList.add('is-active');
 }
 
 function closeMenuModal() {
     if (menuModalOverlay) {
         menuModalOverlay.classList.remove('is-active');
     }
-    // Restore scroll and blur only if NO other modal is open
-    restoreBodyState(); 
+
+    // Restore scroll only if NO other modal is open
+    if (!isAnyModalOpen()) {
+        document.body.classList.remove('modal-open');
+        document.body.style.top = ''; // Remove top property
+        window.scrollTo(0, currentScrollY); // Restore scroll position
+    }
 }
 
 function handleMenuToggle(event) {
